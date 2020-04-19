@@ -6,7 +6,7 @@ import chart_studio
 import chart_studio.plotly as py
 import chart_studio.dashboard_objs as dashboard
 
-chart_studio.tools.set_credentials_file(username='DovIra', api_key='AIcPohsRGYxxuwUHTxlN')
+chart_studio.tools.set_credentials_file(username='DovIra', api_key='*********')
 con = cx_Oracle.connect('test/passtest@//localhost:1521/xe')
 cursor = con.cursor()
 
