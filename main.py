@@ -6,16 +6,17 @@ import chart_studio
 import chart_studio.plotly as py
 import chart_studio.dashboard_objs as dashboard
 
-chart_studio.tools.set_credentials_file(username='DovIra', api_key='*********')
+chart_studio.tools.set_credentials_file(username='DovIra', api_key='AIcPohsRGYxxuwUHTxlN')
 con = cx_Oracle.connect('test/passtest@//localhost:1521/xe')
 cursor = con.cursor()
 
 
-def fileId_from_url(url):
+def row_cursor(url):
     url_raw = url.split('/')
-    cleared = [s.strip('~') for s in url_raw]  # remove the ~
-    nickname = cleared[3]
-    id = cleared[4]
+    a = [s.strip('~') for s in url_raw]  # remove the ~
+    nickname = a[3]
+    id = a[4]
+    print(a)
     fileId = nickname + ':' + id
     return fileId
 
@@ -102,29 +103,29 @@ con.close()
 
 # dashboard creation ---------------------------------------------------
 
-my_board = dashboard.Dashboard()
-box_1 = {
+D_board = dashboard.Dashboard()
+first = {
     'type': 'box',
     'boxType': 'plot',
-    'fileId': fileId_from_url(graph_query1),
+    'fileId': row_cursor(graph_query1),
     'title': '1 запит-перші 5 локацій з мах числом опадів'
 }
-box_2 = {
+second = {
     'type': 'box',
     'boxType': 'plot',
-    'fileId': fileId_from_url(graph_query2),
+    'fileId': row_cursor(graph_query2),
     'title': '2 запит-кількість опадів у % по містах Австралії за 2017р',
 
 }
-box_3 = {
+thirth = {
     'type': 'box',
     'boxType': 'plot',
-    'fileId': fileId_from_url(graph_query3),
+    'fileId': row_cursor(graph_query3),
     'title': '3 запит-динаміка середньої температури у 2017 році по місяцям'
 }
 
-my_board.insert(box_1)
-my_board.insert(box_2, 'below', 1)
-my_board.insert(box_3, 'right', 2)
+D_board.insert(first)
+D_board.insert(second, 'below', 1)
+D_board.insert(thirth, 'right', 2)
 
-py.dashboard_ops.upload(my_board, 'Iriska')
+py.dashboard_ops.upload(D_board, 'lab_2_Ira_Dovgal')
