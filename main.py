@@ -10,17 +10,6 @@ chart_studio.tools.set_credentials_file(username='DovIra', api_key='AIcPohsRGYxx
 con = cx_Oracle.connect('test/passtest@//localhost:1521/xe')
 cursor = con.cursor()
 
-
-def row_cursor(url):
-    url_raw = url.split('/')
-    a = [s.strip('~') for s in url_raw]
-    nickname = a[3]
-    id = a[4]
-    print(a)
-    fileId = nickname + ':' + id
-    return fileId
-
-
 # ----query1------
 query_1 = """select
 LOCATIONS.LOCATION_NAME as location_name, sum(RAINFALL) as sum_rainfall
@@ -110,20 +99,20 @@ D_board = dashboard.Dashboard()
 first = {
     'type': 'box',
     'boxType': 'plot',
-    'fileId': row_cursor(graph_query1),
+    'fileId': 'DovIra:' + graph_query1.split('/')[4],
     'title': '1 запит-перші 5 локацій з мах числом опадів'
 }
 second = {
     'type': 'box',
     'boxType': 'plot',
-    'fileId': row_cursor(graph_query2),
+    'fileId': 'DovIra:' + graph_query2.split('/')[4],
     'title': '2 запит-кількість опадів у % по містах Австралії за 2017р',
 
 }
 thirth = {
     'type': 'box',
     'boxType': 'plot',
-    'fileId': row_cursor(graph_query3),
+    'fileId': 'DovIra:' + graph_query3.split('/')[4],
     'title': '3 запит-динаміка середньої температури у 2017 році по місяцям'
 }
 
