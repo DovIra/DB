@@ -13,7 +13,7 @@ cursor = con.cursor()
 
 def row_cursor(url):
     url_raw = url.split('/')
-    a = [s.strip('~') for s in url_raw]  # remove the ~
+    a = [s.strip('~') for s in url_raw]
     nickname = a[3]
     id = a[4]
     print(a)
@@ -41,6 +41,7 @@ for location_name, sum_rainfall in cursor:
     lab_query1.append(location_name)
 
 # ----end query1-----
+
 # ----query2------
 query_2 = """select LOCATIONS.LOCATION_NAME as location_name, sum(RAINFALL) as sum_rainfall
 from WEATHER
@@ -59,6 +60,7 @@ for location_name, sum_rainfall in cursor:
     lab_query2.append(location_name)
 
 # ----end query2-----
+
 # ----query3------
 
 query_3 = """select
@@ -80,6 +82,7 @@ for month_name, month_number, avg_temperature in cursor:
     lab_query3.append(month_name)
 
 # ----end query3-----
+
 bar = go.Bar(
     x=lab_query1,
     y=val_query1
