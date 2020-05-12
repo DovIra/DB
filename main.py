@@ -53,13 +53,23 @@ for location_name, sum_rainfall in cursor:
 # ----query3------
 
 query_3 = """select
-       to_char(WEATHER_DATE,'Month') as month_name,
-       extract(month from WEATHER_DATE) as month_number,
+       to_char(WEATHERDATE,'Month') as month_name,
+       extract(month from WEATHERDATE) as month_number,
        ROUND(avg((MINTEMP+MAXTEMP)/2),2) as avg_temperature
-from weather
-where extract(year from WEATHER_DATE) = 2017
-group by to_char(WEATHER_DATE,'Month'), extract(month from WEATHER_DATE)
-order by extract(month from WEATHER_DATE)"""
+from (
+         SELECT WEATHER_DAILY.LOCATION_CODE,
+                WEATHER_DAILY.WEATHER_DATE      as WEATHERDATE,
+                MIN(WEATHER_HOURLY.TEMPERATURE) AS MINTEMP,
+                MAX(WEATHER_HOURLY.TEMPERATURE) AS MAXTEMP
+         FROM WEATHER_DAILY
+                  JOIN WEATHER_HOURLY ON
+                 WEATHER_DAILY.LOCATION_CODE = WEATHER_HOURLY.LOCATION_CODE AND
+                 WEATHER_DAILY.WEATHER_DATE = WEATHER_HOURLY.WEATHER_DATE
+         GROUP BY WEATHER_DAILY.LOCATION_CODE, WEATHER_DAILY.WEATHER_DATE
+     )
+where extract(year from WEATHERDATE) = 2017
+group by to_char(WEATHERDATE,'Month'), extract(month from WEATHERDATE)
+order by extract(month from WEATHERDATE)"""
 
 cursor.execute(query_3)
 
