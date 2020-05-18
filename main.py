@@ -12,9 +12,9 @@ cursor = con.cursor()
 
 # ----query1------
 query_1 = """select
-LOCATIONS.LOCATION_NAME as location_name, sum(RAINFALL) as sum_rainfall
-from WEATHER
-join LOCATIONS on LOCATIONS.LOCATION_NAME = WEATHER.location_code
+LOCATIONS.LOCATION_NAME, sum(RAINFALL) as sum_rainfall
+from WEATHER_DAILY
+join LOCATIONS on LOCATIONS.LOCATION_NAME = WEATHER_DAILY.location_code
 group by LOCATION_CODE
 order by sum(RAINFALL) desc
 FETCH FIRST 5 ROWS ONLY
@@ -32,11 +32,12 @@ for location_name, sum_rainfall in cursor:
 # ----end query1-----
 
 # ----query2------
-query_2 = """select LOCATIONS.LOCATION_NAME as location_name, sum(RAINFALL) as sum_rainfall
-from WEATHER
-join LOCATIONS on LOCATIONS.LOCATION_NAME = WEATHER.location_code
-where extract(year from WEATHER_DATE) = 2017
+query_2 = """select LOCATIONS.LOCATION_NAME, sum(RAINFALL) as sum_rainfall
+from WEATHER_DAILY
+join LOCATIONS on LOCATIONS.LOCATION_NAME = WEATHER_DAILY.location_code
 group by LOCATION_CODE
+order by 2 desc
+FETCH FIRST 10 ROWS ONLY
 """
 
 cursor.execute(query_2)
