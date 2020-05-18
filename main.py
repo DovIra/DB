@@ -35,7 +35,7 @@ from WEATHER_DAILY
 join LOCATIONS on LOCATIONS.LOCATION_NAME = WEATHER_DAILY.location_code
 group by LOCATION_CODE
 order by 2 desc
-FETCH FIRST 20 ROWS ONLY
+FETCH FIRST 10 ROWS ONLY
 """
 
 cursor.execute(query_2)
@@ -66,7 +66,6 @@ from (
                  WEATHER_DAILY.WEATHER_DATE = WEATHER_HOURLY.WEATHER_DATE
          GROUP BY WEATHER_DAILY.LOCATION_CODE, WEATHER_DAILY.WEATHER_DATE
      )
--- where extract(year from WEATHERDATE) = 2017
 group by to_char(WEATHERDATE,'Month'), extract(month from WEATHERDATE)
 order by extract(month from WEATHERDATE)
 """
@@ -116,14 +115,14 @@ second = {
     'type': 'box',
     'boxType': 'plot',
     'fileId': 'DovIra:' + graph_query2.split('/')[4],
-    'title': '2 запит-перші 20 міст з найбільшою кількістю опадів у %, по Австралії',
+    'title': '2 запит-перші 10 міст з найбільшою кількістю опадів у %, по Австралії',
 
 }
 thirth = {
     'type': 'box',
     'boxType': 'plot',
     'fileId': 'DovIra:' + graph_query3.split('/')[4],
-    'title': '3 запит-динаміка середньої температури у 2017 році по місяцям'
+    'title': '3 запит-динаміка середньої температури по місяцям'
 }
 
 D_board.insert(first)
