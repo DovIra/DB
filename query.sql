@@ -32,6 +32,5 @@ from (
                  WEATHER_DAILY.WEATHER_DATE = WEATHER_HOURLY.WEATHER_DATE
          GROUP BY WEATHER_DAILY.LOCATION_CODE, WEATHER_DAILY.WEATHER_DATE
      )
-where extract(year from WEATHERDATE) = 2007
 group by to_char(WEATHERDATE,'Month'), extract(month from WEATHERDATE)
 order by extract(month from WEATHERDATE)
